@@ -1,0 +1,12 @@
+{% extends 'base-backend.html.twig' %}
+
+{% block title %}Nouvelle page{% endblock %}
+
+{% block body %}
+<a href="{{ path('app_admin_book_page_index') }}"class="btn btn-dark -sm">Retour a la liste</a>
+    <h1 class="mt-3">Nouvelle page</h1>
+
+    {{ include('admin_book_page/_form.html.twig') }}
+
+{% endblock %}    
+    

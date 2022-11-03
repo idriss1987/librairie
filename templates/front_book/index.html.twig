@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Les livres{% endblock %}
+
+{% block stylesheets %}
+<style>
+    section{
+    border: 2px solid rgb(33,37,41);
+    }
+    .btn .btn-dark{
+    border-radius: 0;
+    }
+</style>
+{% endblock %}
+
+
+
+{% block body %}
+{% for category in categories %}
+{% set booksActive = 0 %}
+{% for book in category.books %}
+    {% if book.isActive == true %}
+    {% set booksActive = booksActive + 1 %}
+    {% endif %}
+{% endfor %}
+
+{% if booksActive > 0 %}
+    <section class="mb-3">
+        <h2 class="bg-dark text-white px-3">{{ category.name }}</h2>
+        <div class="d-flex flex-wrap">
+            {% set nbBook = 0 %}
+            {% for book in category.books %}
+            {% if book.isActive == true and nbBook < 2 %}
+                {# {% if loop.index0 < 3 %} #}
+                <div class="col-6 col-md-3 col-lg-2 p-2 position-relative">
+                    <img src="{{asset ('images/books/' ~ book.imageName )}}" alt="{{book.title}}" class="img-fluid">
+                    {% if is_granted ("ROLE_USER")%}
+                    {% if book in app.user.books %}
+                    <i class="fa-solid fa-star bt-like" data-id="{{ book.id }}"></i>
+                    {% else %}
+                   <i class="fa-regular fa-star bt-like" data-id="{{ book.id }}"></i>
+                   {% endif %}
+                   {% endif %}
+                </div>
+                {% set nbBook = nbBook + 1 %}
+                {% endif %}
+                {# {% endif %} #}
+            {% endfor %}
+        </div>
+        <a href="{{path('app_front_category_show',{id:category.id}) }}" class="btn btn-dark btn-sm w-100"> voir tout</a>
+    </section>
+    {% endif %}
+{% endfor %}
+{% endblock %}

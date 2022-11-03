@@ -1,0 +1,29 @@
+{% extends "base.html.twig" %}
+
+{% block title %}{{ category.name }}{% endblock %}
+
+{% block body %}
+<h1> {{category.name}} </h1>
+{% if category.description is not null %}
+<section>
+    {{category.description|raw}}
+</section>
+{% endif %}
+<div class="d-flex flex-wrap">
+{% for book in category.books %}
+{% if book.isActive == true %}
+<div class="d-flex col-12 col-sm-6 col-md-3 col-lg-2 px-2">
+    <div class="card">
+        <img src="{{ asset('images/books/' ~ book.imageName) }}" class="card-img-top" alt="{{book.title}}">
+        <div class="card-body d-flex flex-wrap justify-content-center">
+            <h5 class="card-title w-100 text-center">
+               {{book.title}}
+            </h5>
+            <a href="{{ path ('app_front_book_show',{ slug: book.slug }) }}" class="btn btn-dark align-self-end">Voir</a>
+        </div>
+    </div>
+</div> 
+{% endif %}
+{% endfor %}
+</div>
+{% endblock %}

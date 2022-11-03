@@ -1,0 +1,39 @@
+{% extends 'base-backend.html.twig' %}
+
+{% block title %}Pages {% endblock %}
+
+{% block body %}
+<div class="d-flex justify-content-between align-items-center">
+    <h1>Page </h1>
+    <a href="{{ path('app_admin_book_page_new') }}"class="btn btn-dark">Nouveau</a>
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>ImageName</th>
+                <th>UpdatedAt</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for book_page in book_pages %}
+            <tr>
+                <td>{{ book_page.id }}</td>
+                <td>{{ book_page.imageName }}</td>
+                <td>{{ book_page.updatedAt ? book_page.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <a href="{{ path('app_admin_book_page_show', {'id': book_page.id}) }}"class= "btn btn-dark" ><i class="align-middle" data-feather="eye"></i></a>
+                    <a href="{{ path('app_admin_book_page_edit', {'id': book_page.id}) }}"class= "btn btn-success"><i class="align-middle" data-feather="edit-2"></i></a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">Aucune entree trouvée</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    
+{% endblock %}

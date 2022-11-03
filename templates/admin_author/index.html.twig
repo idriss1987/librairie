@@ -1,0 +1,62 @@
+{% extends 'base-backend.html.twig' %}
+
+{% block title %}Auteur{% endblock %}
+
+{% block body %}
+<div class="d-flex justify-content-between align-items-center">
+    <h1>Auteurs</h1>
+    <div class="d-flex">
+        <form  method="post" class="d-flex">
+            <input type="text" name="search" class="form-control" placeholder="Rechercher">
+            <button type="submit" class="btn btn-dark"><i data-feather="search"></i></button>
+        </form>
+    <a href="{{ path('app_admin_author_new') }}"class="btn btn-dark ms-3">Nouveau</a>    
+</div>
+</div>
+    <table class="table table-responsive">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>FirstName</th>
+                <th>Pseudo</th>
+                <th>ImageName</th>
+                <th>UpdatedAt</th>
+                {# <th>Biography</th> #}
+                <th>Birthdate</th>
+                {# <th>DateOfDeath</th>
+                <th>Slug</th> #}
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for author in authors %}
+            <tr>
+                <td>{{ author.id }}</td>
+                <td>{{ author.name }}</td>
+                <td>{{ author.firstName }}</td>
+                <td>{{ author.pseudo }}</td>
+                <td><a href="{{ asset('images/authors/' ~ author.imageName) }}" data-lightbox="{{author.imageName}}">
+                    <img src="{{ asset('images/authors/' ~ author.imageName) }}" alt="" class="img-list"></a></td>
+                <td>{{ author.updatedAt ? author.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                {# <td>{{ author.biography }}</td> #}
+                <td>{{ author.birthdate ? author.birthdate|date('Y-m-d H:i:s') : '' }}</td>
+                {# <td>{{ author.dateOfDeath ? author.dateOfDeath|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ author.slug }}</td> #}
+                <td>
+                    <a href="{{ path('app_admin_author_show', {'id': author.id}) }}"class= "btn btn-dark" ><i class="align-middle" data-feather="eye"></i></a>
+                    <a href="{{ path('app_admin_author_edit', {'id': author.id}) }}"class= "btn btn-success"><i class="align-middle" data-feather="edit-2"></i></a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="8">Aucune entree trouvée</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <div class="pagination">
+        {{ knp_pagination_render(authors) }}
+    </div>
+    
+{% endblock %}

@@ -1,0 +1,51 @@
+{% extends 'base-backend.html.twig' %}
+
+{% block title %}Livres{% endblock %}
+
+{% block body %}
+<div class="d-flex justify-content-between align-items-center">
+    <h1>Livres</h1>
+    <a href="{{ path('app_admin_book_new') }}"class="btn btn-dark">Nouveau</a>
+    </div>        
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Title</th>
+                {# <th>Description</th> #}
+                <th>ImageName</th>
+                <th>UpdatedAt</th>
+                <th>IsActive</th>
+                <th>Slug</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for book in books %}
+            <tr>
+                <td>{{ book.id }}</td>
+                <td>{{ book.title }}</td>
+                {# <td>{{ book.description }}</td> #}
+                <td><a href="{{ asset('images/books/' ~ book.imageName) }}" data-lightbox="{{book.imageName}}">
+                    <img src="{{ asset('images/books/' ~ book.imageName) }}" alt="" class="img-list"></a>
+</td>
+                <td>{{ book.updatedAt ? book.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ book.isActive ? 'Yes' : 'No' }}</td>
+                <td>{{ book.slug }}</td>
+                <td>
+                    <a href="{{ path('app_admin_book_show', {'id': book.id}) }}"class= "btn btn-dark" ><i class="align-middle" data-feather="eye"></i></a>
+                    <a href="{{ path('app_admin_book_edit', {'id': book.id}) }}"class= "btn btn-success"><i class="align-middle" data-feather="edit-2"></i></a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">Aucune entree trouvée</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <div class="pagination">
+        {{ knp_pagination_render(books) }}
+    </div>
+    
+{% endblock %}

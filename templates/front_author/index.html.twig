@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nos auteurs{% endblock %}
+
+{% block body %}
+<h1 class="mb-3">Nos auteurs</h1>
+<section class="d-flex flex-wrap justify-content-center">
+{% for author in authors %}
+<div class="d-flex col-12 col-sm-6 col-md-3 col-lg-2 px-2">
+
+    <div class="card">
+        <img src="{{ asset('images/authors/' ~ author.imageName) }}" class="card-img-top" alt="...">
+        <div class="card-body d-flex flex-wrap justify-content-center">
+            <h5 class="card-title w-100 text-center">
+                {% if author.pseudo is not null %}
+                {{ author.pseudo }}
+                {% else %}
+                    {% set nameDisplay = "" %}
+                    {% if author.firstName is not null %}
+                        {% set nameDisplay = author.firstName %}
+                    {% endif %}
+                    {% if author.name is not null %}
+                        {% if nameDisplay|length > 0 %}
+                        {% set nameDisplay = nameDisplay ~ " " ~ author.name %}
+                        {% else %}
+                        {% set nameDisplay = author.name %}
+                        {% endif %}
+                    {% endif %} 
+                    {{ nameDisplay }}
+                {% endif %}
+            </h5>
+            
+            <a href="{{ path ('app_front_author_show',{ slug: author.slug }) }}" class="btn btn-dark align-self-end">Voir</a>
+        </div>
+    </div>
+
+</div>
+{% endfor %}
+<div class="pagination">
+    {{ knp_pagination_render(authors) }}
+</div>
+</section>
+{% endblock %}

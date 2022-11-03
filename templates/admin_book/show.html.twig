@@ -1,0 +1,48 @@
+{% extends 'base-backend.html.twig' %}
+
+{% block title %}Livre{% endblock %}
+
+{% block body %}
+<a href="{{ path('app_admin_book_index') }}"class="btn btn-dark -sm">Retour a la liste</a>
+    <h1 class ="mt-3" >livre</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ book.id }}</td>
+            </tr>
+            <tr>
+                <th>Title</th>
+                <td>{{ book.title }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ book.description }}</td>
+            </tr>
+            <tr>
+                <th>ImageName</th>
+                <td>{{ book.imageName }}</td>
+            </tr>
+            <tr>
+                <th>UpdatedAt</th>
+                <td>{{ book.updatedAt ? book.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>IsActive</th>
+                <td>{{ book.isActive ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>Slug</th>
+                <td>{{ book.slug }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    
+    <div class = " d-flex justify-content-between align-items-center">
+    <a href="{{ path('app_admin_book_edit', {'id': book.id}) }}"class="btn btn-success"><i class="align-middle" data-feather="edit-2"></i></a>
+
+    {{ include('admin_book/_delete_form.html.twig') }}
+</div>
+{% endblock %}

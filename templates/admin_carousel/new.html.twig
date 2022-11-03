@@ -1,0 +1,12 @@
+{% extends 'base-backend.html.twig' %}
+
+{% block title %}New Carousel{% endblock %}
+
+{% block body %}
+<a href="{{ path('app_admin_carousel_index') }}"class="btn btn-dark -sm">Retour a la liste</a>
+    <h1>Nouveau Carousel</h1>
+    
+    {{ include('admin_carousel/_form.html.twig') }}
+
+    
+{% endblock %}

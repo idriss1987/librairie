@@ -1,0 +1,20 @@
+body
+{
+    background: url(../images/double-bubble.webp);
+    .help-text{
+        color: blue;
+    &::before{
+        font-family: "Font Awesome 6 free";
+            content: '\f05a';
+            font-weight:900;
+            margin-right:5px;
+        }
+    }
+    .bt-like{
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    color: darkorange;
+    cursor: pointer;
+    }
+}

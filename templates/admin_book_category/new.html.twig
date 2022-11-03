@@ -1,0 +1,11 @@
+{% extends 'base-backend.html.twig' %}
+
+{% block title %}New BookCategory{% endblock %}
+
+{% block body %}
+    <h1>Create new BookCategory</h1>
+
+    {{ include('admin_book_category/_form.html.twig') }}
+
+    <a href="{{ path('app_admin_book_category_index') }}">back to list</a>
+{% endblock %}

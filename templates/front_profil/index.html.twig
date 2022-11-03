@@ -1,0 +1,80 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon compte{% endblock %}
+
+{% block body %}
+<h1>Mon compte</h1>
+<ul class="nav nav-tabs mt-3" id="myTab" role="tablist">
+    <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" 
+        type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">Mes infos</button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" 
+        type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">Mes favoris</button>
+    </li>
+</ul>
+<div class="tab-content" id="myTabContent">
+    {# pane 1 #}
+    <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
+        <div class="border-start border-end border-bottom p-3">
+            {{ form_start(form) }}
+            <div class="d-flex flex-wrap">
+                <div class="px-2 col-12 col-md-4">
+                {{ form_row(form.name) }}
+                </div>
+                <div class="px-2 col-12 col-md-4">
+                {{ form_row(form.firstname) }}
+                </div>
+                <div class="px-2 col-12 col-md-4">
+                {{ form_row(form.pseudo) }}
+                </div>
+            </div>
+            <div class="d-flex flex-wrap">
+                <div class="px-2 col-12 col-md-4">
+                {{ form_row(form.email) }}
+                </div>
+                <div class="px-2 col-12 col-md-4">
+                {{ form_row(form.plainPassword.first) }}
+                </div>
+                <div class="px-2 col-12 col-md-4">
+                {{ form_row(form.plainPassword.second) }}
+                </div>
+            </div>
+            <div class="d-flex flex-wrap">
+                <div class="px-2 col-12 col-md-6">
+                {{ form_row(form.address) }}
+                </div>
+                <div class="px-2 col-12 col-md-6">
+                {{ form_row(form.address2) }}
+                </div>
+            </div>
+            <div class="d-flex flex-wrap">
+                <div class="px-2 col-12 col-md-4">
+                {{ form_row(form.zipCode) }}
+                </div>
+                <div class="px-2 col-12 col-md-4">
+                {{ form_row(form.city) }}
+                </div>
+                <div class="px-2 col-12 col-md-4">
+                {{ form_row(form.country) }}
+                </div>
+            </div>
+            {{ form_row(form.avatar) }}
+            {{ form_widget(form.save) }}
+            {{ form_end(form) }}
+        </div>
+    </div>
+     {# panel 2 #}
+     <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
+        {# ajouter un if pour l'affichage que si on a le book en fav #}
+        <ul>
+            {% for book in app.user.books %}
+                <li>
+                    <a href="{{ path('app_front_book_show', {slug:book.slug})}}">{{ book.title }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+</div>
+</div>
+{% endblock %}

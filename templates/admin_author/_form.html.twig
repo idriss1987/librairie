@@ -1,0 +1,52 @@
+{% macro renderBookForm(bookForm) %}
+<div class="d-flex flex-wrap">
+    <div class="col-2 d-flex flex-wrap">
+        <div class="w-100">Publié ?</div>
+        {{ form_row(bookForm.vars.form.children["isActive"])}}
+    </div>
+    <div class="col-4 offset-1">{{ form_row(bookForm.vars.form.children["bookCategory"])}}</div>
+    <div class="col-4 offset-1">{{ form_row(bookForm.vars.form.children["imageFile"])}}</div>
+</div>
+{{ form_row(bookForm.vars.form.children["title"])}}
+{{ form_row(bookForm.vars.form.children["description"])}}
+{% endmacro %}
+
+{% import _self as macroRenderBookForm %}
+
+
+{{ form_start(form) }}
+{{ form_row(form.name) }}
+{{ form_row(form.firstName) }}
+{{ form_row(form.pseudo) }}
+{{ form_row(form.imageFile) }}
+{{ form_row(form.biography) }}
+{{ form_row(form.birthdate) }}
+{{ form_row(form.dateOfDeath) }}
+{% if form.books is defined %}
+<button type="button"
+    class="add-another-collection-widget btn btn-dark"
+    data-list-selector="#book-list">Ajouter un livre</button>
+
+
+    <ul id="book-list" class= "list-unstyled"
+    data-prototype="{{ macroRenderBookForm.renderBookForm(form.books.vars.prototype)|e }}"
+    data-widget-tags="{{ '<li class="bg-light border my-3 p-3"></li>'|e }}"
+    data-widget-counter="{{ form.books|length }}">
+{% for book in form.books %}
+    <li>
+        {{ form_errors(book) }}
+        {{ form_widget(book) }}
+    </li>
+{% endfor %}
+   </ul>
+   {% endif %}
+    <button class="btn btn-success">{{ button_label|default('Sauvegarder') }}</button>
+{{ form_end(form) }}
+{% if form.books is not defined %}
+<ul>
+    {% for book in author.books %}
+        <li> <a href="{{path ('app_admin_book_edit',{id:book.id})}}">{{ book.title }}</a></li>
+    {% endfor %}
+</ul>
+{% endif %}
+
